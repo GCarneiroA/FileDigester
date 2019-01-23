@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/01/23 12:21:37.000.856,=C:\Users\gcarn\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/01/23 12:21:37.000.959,=C:\Users\gcarn\Documents\RAD Studio\Projects\ServerMethodsUnit1.pas</Transaction>
+    <Transaction>2019/01/23 12:21:38.000.050,=C:\Users\gcarn\Documents\RAD Studio\Projects\ServerContainerUnit1.pas</Transaction>
+    <Transaction>2019/01/23 18:43:14.265,=C:\Users\gcarn\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/01/23 18:44:40.279,C:\dev\filedigest\ufPrincipal.dfm=C:\Users\gcarn\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2019/01/23 18:44:40.279,C:\dev\filedigest\ufPrincipal.pas=C:\Users\gcarn\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/01/23 18:44:44.369,C:\dev\filedigest\fileDigest.dproj=C:\Users\gcarn\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
