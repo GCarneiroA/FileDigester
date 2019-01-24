@@ -1,10 +1,19 @@
+{
+  Autor: Luis Gustavo Carneiro
+  email: carneirodelphi@hotmail.com
+
+  Biblioteca MD5 utilizada de http://www.endimus.com
+    com algumas adaptações
+}
+
 unit ufPrincipal;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  _threadDigest, Vcl.ComCtrls;
 
 type
   TFPrincipal = class(TForm)
@@ -13,17 +22,19 @@ type
     Label2: TLabel;
     edMD5: TEdit;
     btAbrir: TBitBtn;
-    btVerificar: TBitBtn;
-    pnStatus: TPanel;
+    btComparar: TBitBtn;
     btFechar: TBitBtn;
     fOpen: TFileOpenDialog;
+    Label3: TLabel;
+    edResultado: TEdit;
+    pbStatus: TProgressBar;
+    lbStatus: TLabel;
     procedure btFecharClick(Sender: TObject);
     procedure btAbrirClick(Sender: TObject);
-    procedure btVerificarClick(Sender: TObject);
+    procedure btCompararClick(Sender: TObject);
   private
-    procedure VerificarArquivo;
-  public
-    { Public declarations }
+    f_threadDigest: TThreadDigest;
+    procedure Done(var md5: string; const error_code: Integer);
   end;
 
 var
@@ -32,62 +43,45 @@ var
 implementation
 
 uses
+  md5,
   IdHashMessageDigest;
 
 {$R *.dfm}
 
 procedure TFPrincipal.btAbrirClick(Sender: TObject);
+var
+  v_file: string;
 begin
-  pnStatus.Caption := EmptyStr;
-  pnStatus.Color := clBtnFace;
+  pbStatus.Position := 0;
 
-  if fOpen.Execute then
-    edArquivo.Text := fOpen.FileName;
+  if fOpen.Execute then v_file := fOpen.FileName;
+  edArquivo.Text := v_file;
+
+  f_threadDigest := TThreadDigest.Create;
+  try
+    f_threadDigest.OnDone := Done;
+    f_threadDigest.FileName := v_file;
+    //f_threadDigest.WaitFor;
+
+  finally
+    //FreeAndNil(f_threadDigest);
+  end;
+end;
+
+procedure TFPrincipal.btCompararClick(Sender: TObject);
+begin
+  edResultado.Text := MD5DigestToStr(MD5String(''));
 end;
 
 procedure TFPrincipal.btFecharClick(Sender: TObject);
 begin
-  Application.Terminate;
+  Self.Close;
 end;
 
-procedure TFPrincipal.btVerificarClick(Sender: TObject);
+procedure TFPrincipal.Done(var md5: string; const error_code: Integer);
 begin
-  if FileExists(edArquivo.Text) then
-    VerificarArquivo
-  else
-  begin
-    pnStatus.Color := clRed;
-    pnStatus.Caption := 'Arquivo não encontrado...';
-  end;
-end;
-
-procedure TFPrincipal.VerificarArquivo;
-var
-  IdMD5: TIdHashMessageDigest5;
-  digest: string;
-begin
-  IdMD5 := TIdHashMessageDigest5.Create;
-  try
-    digest := IdMD5.HashStreamAsHex(TFileStream.Create(edArquivo.Text, fmOpenRead or fmShareDenyWrite));
-    if edMD5.Text <> EmptyStr then
-    begin
-      if digest = edMD5.Text then
-      begin
-        pnStatus.Color := clGreen;
-        pnStatus.Caption := 'Arquivo OK...';
-      end else
-      begin
-        pnStatus.Color := clRed;
-        pnStatus.Caption := 'Arquivo corrompido...';
-      end;
-    end else
-    begin
-      pnStatus.Color := clYellow;
-      pnStatus.Caption := digest;
-    end;
-  finally
-    FreeAndNil(IdMD5);
-  end;
+  edResultado.Text := f_threadDigest.MD5String;
+  f_threadDigest.Terminate;
 end;
 
 end.

@@ -1,0 +1,99 @@
+﻿{
+  Autor: Luis Gustavo Carneiro
+  email: carneirodelphi@hotmail.com
+
+  Biblioteca MD5 utilizada de http://www.endimus.com
+    com algumas adaptações
+}
+
+unit _threadDigest;
+
+interface
+
+uses
+  md5, IdHashMessageDigest, System.Classes;
+
+const
+  TIMER_INTERVAL    = 1000;
+  _SUSPENDED        = True;
+
+  ERR_OK            = 0;
+
+type
+  TDoneProc = procedure(var md5: string; const error_code: Integer) of object;
+
+  TThreadDigest = class(TThread)
+  private
+    f_size: Integer;
+    f_totalBytes : Integer;
+
+    f_md5string: String;
+    f_stream: TStream;
+    f_onDone: TDoneProc;
+    f_filename: String;
+    procedure SetFileName(const Value: String);
+  protected
+    procedure sync;
+    procedure Execute; override;
+  public
+    property MD5String: String read f_md5string;
+    property OnDone: TDoneProc read f_ondone write f_ondone;
+    property FileName: String read f_filename write SetFileName;
+  end;
+
+implementation
+
+uses
+  System.SysUtils, ufPrincipal;
+
+{ TThreadDigest }
+
+procedure TThreadDigest.Execute;
+var
+  Digest: TMD5Digest;
+  Context: TMD5Context;
+  Buffer: array[0..1024] of Byte;
+  ReadBytes : Integer;
+  SavePos: Integer;
+begin
+  MD5Init(Context);
+  f_size := f_stream.Size;
+  SavePos := f_stream.Position;
+  f_totalBytes := 0;
+  FPrincipal.pbStatus.Max := f_size;
+  try
+    f_stream.Seek(0, soFromBeginning);
+    repeat
+      ReadBytes := f_stream.Read(Buffer, SizeOf(Buffer));
+      Inc(f_totalBytes, ReadBytes);
+      MD5Update(Context, @Buffer, ReadBytes);
+      Synchronize(sync);
+    until (ReadBytes = 0) or (f_totalBytes = f_size);
+  finally
+    f_stream.Seek(SavePos, soFromBeginning);
+  end;
+  MD5Final(Digest, Context);
+
+  f_md5string := MD5DigestToStr(Digest);
+  if Assigned(f_ondone) then f_ondone(f_md5string, ERR_OK);
+end;
+
+procedure TThreadDigest.SetFileName(const Value: String);
+begin
+  if (Value <> f_filename) then f_filename := Value;
+  if Assigned(f_stream) then FreeAndNil(f_stream);
+  f_stream := TFileStream.Create(Value, fmOpenRead or fmShareDenyWrite);
+end;
+
+procedure TThreadDigest.sync;
+var
+  _read: integer;
+begin
+  _read := f_size - f_totalBytes;
+  FPrincipal.lbStatus.Caption := 'Bytes: ' + _read.ToString + ' de ' + f_size.ToString;
+
+  FPrincipal.pbStatus.Position := f_totalBytes;
+  FPrincipal.pbStatus.Refresh;
+end;
+
+end.

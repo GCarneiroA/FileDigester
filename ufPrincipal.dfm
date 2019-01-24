@@ -4,7 +4,7 @@ object FPrincipal: TFPrincipal
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'MD5 File Checksum comparer'
-  ClientHeight = 166
+  ClientHeight = 206
   ClientWidth = 373
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -34,6 +34,22 @@ object FPrincipal: TFPrincipal
     AutoSize = False
     Caption = 'MD5 Sugerido:'
   end
+  object Label3: TLabel
+    Left = 24
+    Top = 70
+    Width = 81
+    Height = 13
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'Resultado:'
+  end
+  object lbStatus: TLabel
+    Left = 24
+    Top = 138
+    Width = 38
+    Height = 13
+    Caption = 'Status: '
+  end
   object edArquivo: TEdit
     Left = 111
     Top = 13
@@ -46,42 +62,49 @@ object FPrincipal: TFPrincipal
     Top = 40
     Width = 237
     Height = 21
+    CharCase = ecUpperCase
     TabOrder = 1
   end
   object btAbrir: TBitBtn
     Left = 111
-    Top = 67
+    Top = 94
     Width = 75
     Height = 25
     Caption = 'Abrir'
     TabOrder = 2
     OnClick = btAbrirClick
   end
-  object btVerificar: TBitBtn
+  object btComparar: TBitBtn
     Left = 192
-    Top = 67
+    Top = 94
     Width = 75
     Height = 25
-    Caption = 'Verificar'
+    Caption = 'Comparar'
     TabOrder = 3
-    OnClick = btVerificarClick
-  end
-  object pnStatus: TPanel
-    Left = 24
-    Top = 112
-    Width = 324
-    Height = 41
-    ParentBackground = False
-    TabOrder = 4
+    OnClick = btCompararClick
   end
   object btFechar: TBitBtn
     Left = 273
-    Top = 67
+    Top = 94
     Width = 75
     Height = 25
     Caption = 'Fechar'
-    TabOrder = 5
+    TabOrder = 4
     OnClick = btFecharClick
+  end
+  object edResultado: TEdit
+    Left = 111
+    Top = 67
+    Width = 237
+    Height = 21
+    TabOrder = 5
+  end
+  object pbStatus: TProgressBar
+    Left = 24
+    Top = 157
+    Width = 324
+    Height = 28
+    TabOrder = 6
   end
   object fOpen: TFileOpenDialog
     FavoriteLinks = <>
@@ -92,6 +115,6 @@ object FPrincipal: TFPrincipal
       end>
     Options = []
     Left = 56
-    Top = 72
+    Top = 104
   end
 end
