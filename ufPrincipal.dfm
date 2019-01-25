@@ -4,8 +4,8 @@ object FPrincipal: TFPrincipal
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'MD5 File Checksum comparer'
-  ClientHeight = 206
-  ClientWidth = 373
+  ClientHeight = 175
+  ClientWidth = 418
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object FPrincipal: TFPrincipal
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 24
-    Top = 16
+    Left = 8
+    Top = 11
     Width = 81
     Height = 13
     Alignment = taRightJustify
@@ -26,8 +26,8 @@ object FPrincipal: TFPrincipal
     Caption = 'Arquivo:'
   end
   object Label2: TLabel
-    Left = 24
-    Top = 43
+    Left = 8
+    Top = 38
     Width = 81
     Height = 13
     Alignment = taRightJustify
@@ -35,76 +35,104 @@ object FPrincipal: TFPrincipal
     Caption = 'MD5 Sugerido:'
   end
   object Label3: TLabel
-    Left = 24
-    Top = 70
+    Left = 8
+    Top = 65
     Width = 81
     Height = 13
     Alignment = taRightJustify
     AutoSize = False
     Caption = 'Resultado:'
   end
-  object lbStatus: TLabel
-    Left = 24
-    Top = 138
-    Width = 38
-    Height = 13
-    Caption = 'Status: '
-  end
   object edArquivo: TEdit
-    Left = 111
-    Top = 13
+    Left = 95
+    Top = 8
     Width = 237
     Height = 21
+    Color = clSilver
+    ReadOnly = True
     TabOrder = 0
   end
   object edMD5: TEdit
-    Left = 111
-    Top = 40
+    Left = 95
+    Top = 35
     Width = 237
     Height = 21
     CharCase = ecUpperCase
     TabOrder = 1
   end
   object btAbrir: TBitBtn
-    Left = 111
-    Top = 94
+    Left = 176
+    Top = 89
     Width = 75
     Height = 25
+    Cursor = crHandPoint
     Caption = 'Abrir'
     TabOrder = 2
     OnClick = btAbrirClick
   end
-  object btComparar: TBitBtn
-    Left = 192
-    Top = 94
-    Width = 75
-    Height = 25
-    Caption = 'Comparar'
-    TabOrder = 3
-    OnClick = btCompararClick
-  end
   object btFechar: TBitBtn
-    Left = 273
-    Top = 94
+    Left = 257
+    Top = 89
     Width = 75
     Height = 25
+    Cursor = crHandPoint
     Caption = 'Fechar'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btFecharClick
   end
   object edResultado: TEdit
-    Left = 111
-    Top = 67
+    Left = 95
+    Top = 62
     Width = 237
     Height = 21
-    TabOrder = 5
+    Color = clSilver
+    ReadOnly = True
+    TabOrder = 4
   end
   object pbStatus: TProgressBar
-    Left = 24
-    Top = 157
+    Left = 338
+    Top = 8
+    Width = 72
+    Height = 161
+    DoubleBuffered = False
+    Orientation = pbVertical
+    ParentDoubleBuffered = False
+    TabOrder = 5
+  end
+  object Panel1: TPanel
+    Left = 8
+    Top = 120
     Width = 324
-    Height = 28
+    Height = 49
+    BevelKind = bkTile
+    BevelOuter = bvNone
     TabOrder = 6
+    object lbFile: TLabel
+      Left = 16
+      Top = 5
+      Width = 41
+      Height = 13
+      Caption = 'Arquivo:'
+    end
+    object lbStatus: TLabel
+      Left = 16
+      Top = 24
+      Width = 38
+      Height = 13
+      Caption = 'Status: '
+    end
+  end
+  object pnStatus: TPanel
+    Left = 8
+    Top = 89
+    Width = 162
+    Height = 25
+    BevelKind = bkTile
+    BevelOuter = bvNone
+    Caption = 'ABRA UM ARQUIVO -->>'
+    Color = clSkyBlue
+    ParentBackground = False
+    TabOrder = 7
   end
   object fOpen: TFileOpenDialog
     FavoriteLinks = <>
