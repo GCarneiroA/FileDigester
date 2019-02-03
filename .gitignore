@@ -2,3 +2,4 @@
 *.local
 *.dcu
 *.stat
+__history/
