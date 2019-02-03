@@ -25,21 +25,26 @@ type
     btFechar: TBitBtn;
     fOpen: TFileOpenDialog;
     Label3: TLabel;
-    edResultado: TEdit;
+    edResMD5: TEdit;
     pbStatus: TProgressBar;
     Panel1: TPanel;
     lbFile: TLabel;
     lbStatus: TLabel;
     pnStatus: TPanel;
+    Label4: TLabel;
+    edResSHA256: TEdit;
+    edSHA256: TEdit;
+    Label5: TLabel;
+    pnMD5Status: TPanel;
+    pnSHA256Status: TPanel;
     procedure btFecharClick(Sender: TObject);
     procedure btAbrirClick(Sender: TObject);
-    procedure btCompararClick(Sender: TObject);
   private
     f_lastPerc: Integer;
     f_threadDigest: TThreadDigest;
     procedure OnRead(const bytesRead: Int64; const fileSize: Int64);
-    procedure OnFileOpen(const fileSize: Int64; const Opened: Boolean);
-    procedure Done(var md5: string; const error_code: Integer);
+    procedure OnFileOpen(const fileSize: Int64);
+    procedure Done(var md5: string);
   end;
 
 var
@@ -98,40 +103,54 @@ begin
   end;
 end;
 
-procedure TFPrincipal.btCompararClick(Sender: TObject);
-begin
-  edResultado.Text := MD5DigestToStr(MD5String(''));
-end;
-
 procedure TFPrincipal.btFecharClick(Sender: TObject);
 begin
   Self.Close;
 end;
 
-procedure TFPrincipal.Done(var md5: string; const error_code: Integer);
+procedure TFPrincipal.Done(var md5: string);
 begin
-  edResultado.Text := f_threadDigest.MD5String;
+  edResMD5.Text := f_threadDigest.MD5String;
+  edResSha256.Text := f_threadDigest.SHA256String;
+
   f_threadDigest.Terminate;
 
   if edMD5.Text <> EmptyStr then
   begin
-    if edResultado.Text = edMD5.Text then
+    if edResMD5.Text = edMD5.Text then
     begin
-      pnStatus.Color := clLime;
-      pnStatus.Caption := 'ARQUIVO OK';
+      pnMD5Status.Color := clLime;
+      pnMD5Status.Caption := 'MD5 OK';
     end else
     begin
-      pnStatus.Color := clRed;
-      pnStatus.Caption := 'CORROMPIDO';
+      pnMD5Status.Color := clRed;
+      pnMD5Status.Caption := 'CORROMPIDO';
     end;
   end else
   begin
-    pnStatus.Color := clBlue;
-    pnStatus.Caption := 'NÃO COMPARADO';
+    pnMD5Status.Color := clBlue;
+    pnMD5Status.Caption := '...';
+  end;
+
+  if edSHA256.Text <> EmptyStr then
+  begin
+    if edResSHA256.Text = edSHA256.Text then
+    begin
+      pnSHA256Status.Color := clLime;
+      pnSHA256Status.Caption := 'MD5 OK';
+    end else
+    begin
+      pnSHA256Status.Color := clRed;
+      pnSHA256Status.Caption := 'CORROMPIDO';
+    end;
+  end else
+  begin
+    pnSHA256Status.Color := clBlue;
+    pnSHA256Status.Caption := '...';
   end;
 end;
 
-procedure TFPrincipal.OnFileOpen(const fileSize: Int64; const Opened: Boolean);
+procedure TFPrincipal.OnFileOpen(const fileSize: Int64);
 begin
   pnStatus.Color := clYellow;
   pnStatus.Caption := 'AGUARDE...';

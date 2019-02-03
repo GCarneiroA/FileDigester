@@ -4,8 +4,8 @@ object FPrincipal: TFPrincipal
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'MD5 File Checksum comparer'
-  ClientHeight = 175
-  ClientWidth = 418
+  ClientHeight = 262
+  ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FPrincipal: TFPrincipal
   object Label1: TLabel
     Left = 8
     Top = 11
-    Width = 81
+    Width = 100
     Height = 13
     Alignment = taRightJustify
     AutoSize = False
@@ -28,7 +28,7 @@ object FPrincipal: TFPrincipal
   object Label2: TLabel
     Left = 8
     Top = 38
-    Width = 81
+    Width = 100
     Height = 13
     Alignment = taRightJustify
     AutoSize = False
@@ -36,77 +36,94 @@ object FPrincipal: TFPrincipal
   end
   object Label3: TLabel
     Left = 8
-    Top = 65
-    Width = 81
+    Top = 92
+    Width = 100
     Height = 13
     Alignment = taRightJustify
     AutoSize = False
-    Caption = 'Resultado:'
+    Caption = 'MD5:'
+  end
+  object Label4: TLabel
+    Left = 8
+    Top = 119
+    Width = 100
+    Height = 13
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'SHA256:'
+  end
+  object Label5: TLabel
+    Left = 8
+    Top = 65
+    Width = 100
+    Height = 13
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'SHA256 Sugerido:'
   end
   object edArquivo: TEdit
-    Left = 95
+    Left = 114
     Top = 8
-    Width = 237
+    Width = 323
     Height = 21
     Color = clSilver
     ReadOnly = True
     TabOrder = 0
   end
   object edMD5: TEdit
-    Left = 95
+    Left = 114
     Top = 35
-    Width = 237
+    Width = 323
     Height = 21
     CharCase = ecUpperCase
     TabOrder = 1
   end
   object btAbrir: TBitBtn
-    Left = 176
-    Top = 89
+    Left = 281
+    Top = 143
     Width = 75
     Height = 25
     Cursor = crHandPoint
     Caption = 'Abrir'
-    TabOrder = 2
+    TabOrder = 5
     OnClick = btAbrirClick
   end
   object btFechar: TBitBtn
-    Left = 257
-    Top = 89
+    Left = 362
+    Top = 143
     Width = 75
     Height = 25
     Cursor = crHandPoint
     Caption = 'Fechar'
-    TabOrder = 3
+    TabOrder = 6
     OnClick = btFecharClick
   end
-  object edResultado: TEdit
-    Left = 95
-    Top = 62
+  object edResMD5: TEdit
+    Left = 114
+    Top = 89
     Width = 237
     Height = 21
     Color = clSilver
     ReadOnly = True
-    TabOrder = 4
+    TabOrder = 3
   end
   object pbStatus: TProgressBar
-    Left = 338
-    Top = 8
-    Width = 72
-    Height = 161
+    Left = 8
+    Top = 174
+    Width = 429
+    Height = 27
     DoubleBuffered = False
-    Orientation = pbVertical
     ParentDoubleBuffered = False
-    TabOrder = 5
+    TabOrder = 7
   end
   object Panel1: TPanel
     Left = 8
-    Top = 120
-    Width = 324
+    Top = 207
+    Width = 429
     Height = 49
     BevelKind = bkTile
     BevelOuter = bvNone
-    TabOrder = 6
+    TabOrder = 9
     object lbFile: TLabel
       Left = 16
       Top = 5
@@ -124,15 +141,52 @@ object FPrincipal: TFPrincipal
   end
   object pnStatus: TPanel
     Left = 8
-    Top = 89
-    Width = 162
+    Top = 143
+    Width = 267
     Height = 25
     BevelKind = bkTile
     BevelOuter = bvNone
     Caption = 'ABRA UM ARQUIVO -->>'
     Color = clSkyBlue
     ParentBackground = False
-    TabOrder = 7
+    TabOrder = 8
+  end
+  object edResSHA256: TEdit
+    Left = 114
+    Top = 116
+    Width = 237
+    Height = 21
+    Color = clSilver
+    ReadOnly = True
+    TabOrder = 4
+  end
+  object edSHA256: TEdit
+    Left = 114
+    Top = 62
+    Width = 323
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 2
+  end
+  object pnMD5Status: TPanel
+    Left = 357
+    Top = 89
+    Width = 80
+    Height = 21
+    BevelKind = bkTile
+    BevelOuter = bvNone
+    ParentBackground = False
+    TabOrder = 10
+  end
+  object pnSHA256Status: TPanel
+    Left = 357
+    Top = 116
+    Width = 80
+    Height = 21
+    BevelKind = bkTile
+    BevelOuter = bvNone
+    ParentBackground = False
+    TabOrder = 11
   end
   object fOpen: TFileOpenDialog
     FavoriteLinks = <>
