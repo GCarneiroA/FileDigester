@@ -96,12 +96,6 @@ procedure TThreadDigest.sync;
 begin
   if Assigned(f_onRead) then
     f_onRead(f_totalBytes, f_size);
-
-
-  //FPrincipal.lbStatus.Caption := 'Bytes: ' + _read.ToString + ' de ' + f_size.ToString;
-
-  //FPrincipal.pbStatus.Position := f_totalBytes;
-  //FPrincipal.pbStatus.Refresh;
 end;
 
 end.
