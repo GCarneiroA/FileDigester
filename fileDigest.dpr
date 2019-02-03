@@ -3,8 +3,7 @@ program fileDigest;
 uses
   Vcl.Forms,
   ufPrincipal in 'ufPrincipal.pas' {FPrincipal},
-  _threadDigest in '_threadDigest.pas',
-  md5 in 'md5.pas';
+  _threadDigest in '_threadDigest.pas';
 
 {$R *.res}
 

@@ -1,9 +1,6 @@
 {
   Autor: Luis Gustavo Carneiro
   email: carneirodelphi@hotmail.com
-
-  Biblioteca MD5 utilizada de http://www.endimus.com
-    com algumas adaptações
 }
 
 unit ufPrincipal;
@@ -52,11 +49,6 @@ var
 
 implementation
 
-uses
-  md5,
-  Math,
-  IdHashMessageDigest;
-
 {$R *.dfm}
 
 function FormatByteSize(const bytes: Int64): string;
@@ -83,6 +75,8 @@ var
   v_file: string;
 begin
   pbStatus.Position := 0;
+  edResMD5.Text := EmptyStr;
+  edResSHA256.Text := EmptyStr;
 
   if fOpen.Execute then v_file := fOpen.FileName;
   edArquivo.Text := v_file;
@@ -148,6 +142,8 @@ begin
     pnSHA256Status.Color := clBlue;
     pnSHA256Status.Caption := '...';
   end;
+  pnStatus.Color := clLime;
+  pnStatus.Caption := 'CONCLUIDO';
 end;
 
 procedure TFPrincipal.OnFileOpen(const fileSize: Int64);
@@ -158,7 +154,7 @@ begin
   f_lastPerc := 0;
   pbStatus.Position := 0;
   if fileSize > MaxInt then
-    pbStatus.Max := MaxInt // Usar porcentagem para arquivos muito grandes
+    pbStatus.Max := MaxInt
   else
     pbStatus.Max := fileSize;
   lbFile.Caption := 'Tamanho do arquivo: ' + FormatByteSize(fileSize);
