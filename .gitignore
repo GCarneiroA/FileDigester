@@ -1,4 +1,5 @@
 Win64/*
+__history/*
 *.identcache
 *.local
 *.dcu
