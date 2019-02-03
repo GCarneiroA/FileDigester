@@ -1,1 +1,5 @@
-*.identcache;*.local;*.dcu;*.stat;__history;*.rsm
+*.identcache
+*.local
+*.dcu
+*.stat
+*.rsm
